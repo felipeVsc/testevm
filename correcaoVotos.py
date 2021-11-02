@@ -1,33 +1,34 @@
 import pandas as pd
 from progress.bar import Bar
+listauf = []
 siglas = [
-                            # 'AC',
-                            # 'AL',
-                            # 'AP',
-                            # 'AM',
-                            # 'BA',
-                            'CE',
-                            'DF',
-                            'ES',
-                            'GO',
-                            'MA',
+                             'AC',
+#                             'AL',
+   #                          'AP',
+ #                            'AM',
+  #                           'BA',
+    #                        'CE',
+     #                       'DF',
+      #                      'ES',
+  #                          'GO',
+#                           'MA',
                             'MS',
                             'MT',
                             'MG',
                             'PA',
                             'PB',
                             'PR',
-                            'PE',
-                            'PI',
+       #                     'PE',
+#                            'PI',
                             'RJ',
-                            'RN',
-                            'RS',
-                            'RO',
-                            'RR',
-                            'SC',
+#                            'RN',
+#                            'RS',
+#                            'RO',
+#                            'RR',
+#                            'SC',
                             'SP',
-                            'SE',
-                            'TO',
+#                            'SE',
+#                            'TO',
                         ]
 
 
@@ -35,7 +36,7 @@ siglas = [
 # reader = pd.read_csv(arquivo, sep=',',encoding='utf8',low_memory=False)
 # reader.loc[x:x,'CD_CBO'] = CBO_list[x]
 # reader.to_csv(arquivo, encoding='utf-8', index=False)
-headerArquivoVotacao = ['DT_GERACAO','HH_GERACAO','ANO_ELEICAO','NR_TURNO','SG_UF','SG_UE','NM_UE','CD_CARGO','DS_CARGO','NM_CANDIDATO','SQ_CANDIDATO','NR_CANDIDATO','NM_URNA_CANDIDATO','CD_SITUACAO_CANDIDATURA','DS_SITUACAO_CANDIDATURA','NR_PARTIDO','SG_PARTIDO','NM_PARTIDO','CD_LEGENDA','SG_LEGENDA','DS_COMPOSICAO_LEGENDA','NM_LEGENDA','CD_OCUPACAO','DS_OCUPACAO','DT_NASCIMENTO','NR_TITULO_ELEITORAL_CANDIDATO','NR_IDADE_DATA_POSSE','CD_GENERO','DS_GENERO','SG_UF_NASCIMENTO','CD_MUNICIPIO_NASCIMENTO','NM_MUNICIPIO_NASCIMENTO','CD_SIT_TOT_TURNO','DS_SIT_TOT_TURNO','CD_IBGE_MUN_NASC','NR_ZONA','CD_SIT_CAND_SUPERIOR','DS_SIT_CAND_SUPERIOR','QT_VOTOS_NOMINAIS','CD_TIPO_ELEICAO','TP_ABRANGENCIA','CD_MUNICIPIO','NM_SOCIAL_CANDIDATO','CD_DETALHE_SITUACAO_CAND','DS_DETALHE_SITUACAO_CAND','CD_CBO','CD_MUN_IBGE']
+headerArquivoVotacao = ['DT_GERACAO','HH_GERACAO','ANO_ELEICAO','CD_TIPO_ELEICAO','NM_TIPO_ELEICAO','NR_TURNO','CD_ELEICAO','DS_ELEICAO','DT_ELEICAO','TP_ABRANGENCIA','SG_UF','SG_UE','NM_UE','CD_CARGO','DS_CARGO','SQ_CANDIDATO','NR_CANDIDATO','NM_CANDIDATO','NM_URNA_CANDIDATO','NM_SOCIAL_CANDIDATO','CD_SITUACAO_CANDIDATURA','DS_SITUACAO_CANDIDATURA','CD_DETALHE_SITUACAO_CAND','DS_DETALHE_SITUACAO_CAND','TP_AGREMIACAO','NR_PARTIDO','SG_PARTIDO','NM_PARTIDO','SQ_COLIGACAO','NM_COLIGACAO','DS_COMPOSICAO_COLIGACAO','DT_NASCIMENTO','NR_IDADE_DATA_POSSE','NR_TITULO_ELEITORAL_CANDIDATO','CD_GENERO','DS_GENERO','CD_OCUPACAO','DS_OCUPACAO','CD_SIT_TOT_TURNO','DS_SIT_TOT_TURNO','NR_ZONA','QT_VOTOS_NOMINAIS','CD_MUNICIPIO','CD_CBO']
 
 def removerNulos(campo,valor):
     # se tudo certo, return True, se nao, retorna o que é p substituir na main
@@ -57,7 +58,7 @@ def removerNulos(campo,valor):
     return True
 
 
-ano = 2002
+ano = 2016
 for uf in siglas:
     print(uf)
     try:
@@ -67,12 +68,12 @@ for uf in siglas:
 
         #readerVotacao = arquivo original
 
-        arquivoVotacao = 'dadosOriginais/votacao_candidato_munzona_'+str(ano)+'_'+uf+'.csv'
+        arquivoVotacao = './2016org/votacao_candidato_munzona_'+str(ano)+'_'+uf+'.csv'
         readerVotacao = pd.read_csv(arquivoVotacao,encoding='latin1',sep=',')
 
         #readerNovo = arquivoNovo
 
-        arquivoNovo = 'dadosNovos/votacao_candidato_munzona_'+str(ano)+'_'+uf+'.csv'
+        arquivoNovo = './2016/votacao_candidato_munzona_'+str(ano)+'_'+uf+'.csv'
         readerNovo = pd.read_csv(arquivoNovo,encoding='latin1',sep=',')
 
         bar = Bar('Processing', max=len(readerVotacao))
@@ -114,4 +115,5 @@ for uf in siglas:
         del readerNovo['NR_ZONA']
         readerNovo.to_csv(arquivoNovo,encoding='utf8',sep=',',index=False)
     except FileNotFoundError:
-        pass
+        print('file not found')
+        listauf.append(uf)
